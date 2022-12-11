@@ -7,6 +7,13 @@ import (
 	"strings"
 )
 
+func main() {
+	fmt.Println("Part 1:")
+	fmt.Println(scoreFromInput("input.txt", false))
+	fmt.Println("Part 2:")
+	fmt.Println(scoreFromInput("input.txt", true))
+}
+
 var col1Map = map[string]string{
 	"A": "rock",
 	"B": "paper",
@@ -56,11 +63,6 @@ var shapePointsMap = map[string]int{
 	"rock":     1,
 	"paper":    2,
 	"scissors": 3,
-}
-
-func main() {
-	score := scoreFromInput("input.txt", true)
-	fmt.Println(score)
 }
 
 func handPoints(theirHand string, myHand string) int {

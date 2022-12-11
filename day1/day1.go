@@ -41,10 +41,7 @@ func caloriesArrayFromInput(fileName string) []int {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// Convert []byte to string
 	text := string(fileContent)
-
 	calorieStrings := strings.Split(text, "\n")
 	elfCalories := []int{}
 	caloriesSum := 0
