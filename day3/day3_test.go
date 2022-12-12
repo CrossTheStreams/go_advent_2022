@@ -33,3 +33,11 @@ func TestPrioritySumFromInput(t *testing.T) {
 		t.Errorf("got %d, wanted %d", got, want)
 	}
 }
+
+func TestPrioritySumForGroupsOfThree(t *testing.T) {
+	got := prioritySumForGroupsOfThree("small_input.txt")
+	want := 70
+	if got != want {
+		t.Errorf("got %d, wanted %d", got, want)
+	}
+}

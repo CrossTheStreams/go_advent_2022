@@ -32,6 +32,30 @@ func findItem(rucksack Rucksack) string {
 	return shared
 }
 
+func findGroupSharedItem(group []string) string {
+	var sharedItem string
+	itemsInLines := map[string]map[int]bool{}
+	for i := 0; i < len(group); i++ {
+		line := group[i]
+		for j := 0; j < len(line); j++ {
+			item := string(line[j])
+			if itemsInLines[item] == nil {
+				itemsInLines[item] = map[int]bool{}
+			}
+			itemsInLines[item][i] = true
+			inAllThreeGroups := (itemsInLines[item][0] && itemsInLines[item][1] && itemsInLines[item][2])
+			if inAllThreeGroups {
+				sharedItem = item
+				break
+			}
+		}
+		if sharedItem != "" {
+			break
+		}
+	}
+	return sharedItem
+}
+
 func ruckSackFromLine(line string) Rucksack {
 	midPoint := (len(line) / 2)
 	firstHalf := line[0:midPoint]
@@ -82,7 +106,29 @@ func prioritySumFromInput(fileName string) int {
 	return sum
 }
 
+func prioritySumForGroupsOfThree(fileName string) int {
+	priorityMap := createPriorityLookupMap()
+	sum := 0
+	fileRows := readFile(fileName)
+	fileString := string(fileRows)
+	stringRows := strings.Split(fileString, "\n")
+	groupLines := []string{}
+	for i := 0; i < len(stringRows); i++ {
+		stringRow := stringRows[i]
+		groupLines = append(groupLines, stringRow)
+		if len(groupLines) == 3 {
+			char := findGroupSharedItem(groupLines)
+			itemPriority := priorityMap[char]
+			sum += itemPriority
+			groupLines = []string{}
+		}
+	}
+	return sum
+}
+
 func main() {
 	fmt.Println("Part1:")
 	fmt.Println(prioritySumFromInput("small_input.txt"))
+	fmt.Println("Part2:")
+	fmt.Println(prioritySumForGroupsOfThree("small_input.txt"))
 }
