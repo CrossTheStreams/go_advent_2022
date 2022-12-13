@@ -12,6 +12,14 @@ func TestCountContainingSections(t *testing.T) {
 	}
 }
 
+func TestCountOverlappingSections(t *testing.T) {
+	got := countOverlappingSections("small_input.txt")
+	want := 4
+	if got != want {
+		t.Errorf("got %d, wanted %d", got, want)
+	}
+}
+
 func TestSectionIDToTuple(t *testing.T) {
 	sectionID := "2-4"
 	got := sectionIDToTuple(sectionID)
@@ -48,6 +56,36 @@ func TestSlicesContainsOtherNoOverlap(t *testing.T) {
 	b := []int{5, 8}
 	got := sliceContainsOther(a, b)
 	want := false
+	if got != want {
+		t.Errorf("got %t, wanted %t", got, want)
+	}
+}
+
+func TestSlicesDontOverlap(t *testing.T) {
+	a := []int{1, 4}
+	b := []int{5, 8}
+	got := slicesOverlap(a, b)
+	want := false
+	if got != want {
+		t.Errorf("got %t, wanted %t", got, want)
+	}
+}
+
+func TestSlicesOverlap(t *testing.T) {
+	a := []int{1, 4}
+	b := []int{4, 8}
+	got := slicesOverlap(a, b)
+	want := true
+	if got != want {
+		t.Errorf("got %t, wanted %t", got, want)
+	}
+}
+
+func TestSlicesOverlapMore(t *testing.T) {
+	a := []int{1, 7}
+	b := []int{3, 6}
+	got := slicesOverlap(a, b)
+	want := true
 	if got != want {
 		t.Errorf("got %t, wanted %t", got, want)
 	}
